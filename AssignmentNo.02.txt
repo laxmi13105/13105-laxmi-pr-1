@@ -1,0 +1,123 @@
+                                                   Assignment No.02
+
+Microsoft Windows [Version 10.0.22631.5624]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -h localhost -u root -p
+Enter password: *********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 12
+Server version: 8.0.43 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database inventry;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use inventry;
+Database changed
+mysql> create table product(pid int primary key,pname varchar(20),price float);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table sale(sid int,pid int,qty int,FOREIGN KEY(pid) REFERENCES product(pid));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql>  create table supplier(supid int primary key,supname varchar(20),supaddress varchar(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> alter table supplier add CONSTRAINT chk CHECK (supid>900);
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> create user 'rajesh'@localhost identified by 'rajesh123';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>  grant select on *.* to 'rajesh'@'localhost';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create user 'mohit'@localhost identified by 'mohit123';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> grant all privileges on *.* to 'mohit'@'localhost';
+Query OK, 0 rows affected (0.01 sec)
+
+Microsoft Windows [Version 10.0.22631.5624]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -h localhost -u root -p
+Enter password: *********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 8.0.43 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use inventry;
+Database changed
+mysql> desc supplier;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| supid      | int         | NO   | PRI | NULL    |       |
+| supname    | varchar(20) | YES  |     | NULL    |       |
+| supaddress | varchar(20) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> show grants for 'rajesh'@localhost;
++---------------------------------------------+
+| Grants for rajesh@localhost                 |
++---------------------------------------------+
+| GRANT SELECT ON *.* TO `rajesh`@`localhost` |
++---------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql>  use inventry;
+Database changed
+mysql> desc product;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| pid   | int         | NO   | PRI | NULL    |       |
+| pname | varchar(20) | YES  |     | NULL    |       |
+| price | float       | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc supplier;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| supid      | int         | NO   | PRI | NULL    |       |
+| supname    | varchar(20) | YES  |     | NULL    |       |
+| supaddress | varchar(20) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table supplier add email varchar(40);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>  desc supplier;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| supid      | int         | NO   | PRI | NULL    |       |
+| supname    | varchar(20) | YES  |     | NULL    |       |
+| supaddress | varchar(20) | YES  |     | NULL    |       |
+| email      | varchar(40) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
