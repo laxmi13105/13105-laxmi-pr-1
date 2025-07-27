@@ -1,0 +1,300 @@
+Microsoft Windows [Version 10.0.19045.6093]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Program Files\MySQL\MySQL Server 9.3\bin>mysql -h localhost -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 9.3.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use imventory;
+ERROR 1049 (42000): Unknown database 'imventory'
+mysql> use inventory;
+Database changed
+mysql> create view demoview1 as select id, name, status from demo_table where status='pass';
+Query OK, 0 rows affected (0.195 sec)
+
+mysql> select * from demoview1;
++----+-------+--------+
+| id | name  | status |
++----+-------+--------+
+|  1 | Alice | pass   |
++----+-------+--------+
+1 row in set (0.174 sec)
+
+mysql> desc demo_table;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| id     | int         | NO   | PRI | NULL    |       |
+| name   | varchar(50) | YES  |     | NULL    |       |
+| status | varchar(20) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.182 sec)
+
+mysql> update demo_table where status='fail';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where status='fail'' at line 1
+mysql> desc v1;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| pid   | int         | NO   |     | NULL    |       |
+| pname | varchar(20) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.018 sec)
+
+mysql> insert into demoview (id,name,status) values(104,'Rajesh','pass');
+ERROR 1054 (42S22): Unknown column 'id' in 'field list'
+mysql> insert into demoview1 (id,name,status) values(104,'Rajesh','pass');
+Query OK, 1 row affected (0.108 sec)
+
+mysql> desc demoview1;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| id     | int         | NO   |     | NULL    |       |
+| name   | varchar(50) | YES  |     | NULL    |       |
+| status | varchar(20) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.013 sec)
+
+mysql> select*form demoview1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'form demoview1' at line 1
+mysql> select * from demoview1;
++-----+--------+--------+
+| id  | name   | status |
++-----+--------+--------+
+|   1 | Alice  | pass   |
+| 104 | Rajesh | pass   |
++-----+--------+--------+
+2 rows in set (0.005 sec)
+
+mysql> insert into demoview1 (id,name,status) values(103,'Rohit','fail');
+Query OK, 1 row affected (0.104 sec)
+
+mysql> insert into demoview1 (id,name,status) values(105,'shejal','fail');
+Query OK, 1 row affected (0.088 sec)
+
+mysql> select * from demoview1;
++-----+--------+--------+
+| id  | name   | status |
++-----+--------+--------+
+|   1 | Alice  | pass   |
+| 104 | Rajesh | pass   |
++-----+--------+--------+
+2 rows in set (0.005 sec)
+
+mysql> update demoview1 set name='Alice' where id=1;
+Query OK, 0 rows affected (0.022 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
+
+mysql> select * from demoview1;
++-----+--------+--------+
+| id  | name   | status |
++-----+--------+--------+
+|   1 | Alice  | pass   |
+| 104 | Rajesh | pass   |
++-----+--------+--------+
+2 rows in set (0.005 sec)
+
+mysql> show table;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> show tables;
++---------------------+
+| Tables_in_inventory |
++---------------------+
+| demo_table          |
+| demoview            |
+| demoview1           |
+| product             |
+| sale                |
+| supplier            |
+| v1                  |
++---------------------+
+7 rows in set (0.045 sec)
+
+mysql> select * from demo_table;
++-----+--------+--------+
+| id  | name   | status |
++-----+--------+--------+
+|   1 | Alice  | pass   |
+|   2 | Bob    | fail   |
+|   3 | Bob    | fail   |
+| 103 | Rohit  | fail   |
+| 104 | Rajesh | pass   |
+| 105 | shejal | fail   |
++-----+--------+--------+
+6 rows in set (0.004 sec)
+
+mysql> update demo_table set name='Ramesh' where id=2;
+Query OK, 1 row affected (0.086 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from demo_table;
++-----+--------+--------+
+| id  | name   | status |
++-----+--------+--------+
+|   1 | Alice  | pass   |
+|   2 | Ramesh | fail   |
+|   3 | Bob    | fail   |
+| 103 | Rohit  | fail   |
+| 104 | Rajesh | pass   |
+| 105 | shejal | fail   |
++-----+--------+--------+
+6 rows in set (0.004 sec)
+
+mysql> update demo_table set status='pass' where id=105;
+Query OK, 1 row affected (0.093 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from demo_table;
++-----+--------+--------+
+| id  | name   | status |
++-----+--------+--------+
+|   1 | Alice  | pass   |
+|   2 | Ramesh | fail   |
+|   3 | Bob    | fail   |
+| 103 | Rohit  | fail   |
+| 104 | Rajesh | pass   |
+| 105 | shejal | pass   |
++-----+--------+--------+
+6 rows in set (0.004 sec)
+
+mysql> update demo_table set id=4 where name='Rohit';
+Query OK, 1 row affected (0.093 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update demo_table set id=5 where name='Rajesh';
+Query OK, 1 row affected (0.086 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update demo_table set id=6 where name='shejal';
+Query OK, 1 row affected (0.090 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from demo_table;
++----+--------+--------+
+| id | name   | status |
++----+--------+--------+
+|  1 | Alice  | pass   |
+|  2 | Ramesh | fail   |
+|  3 | Bob    | fail   |
+|  4 | Rohit  | fail   |
+|  5 | Rajesh | pass   |
+|  6 | shejal | pass   |
++----+--------+--------+
+6 rows in set (0.004 sec)
+
+mysql> use inventory;
+ERROR 1049 (42000): Unknown database 'inventory'
+mysql> use inventry;
+Database changed
+mysql> create index X on product(pid,pname);
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc product;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| pid   | int         | NO   | PRI | NULL    |       |
+| pname | varchar(20) | YES  |     | NULL    |       |
+| price | float       | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> SHOW INDEX FROM product;
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table   | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| product |          0 | PRIMARY  |            1 | pid         | A         |           1 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| product |          1 | X        |            1 | pid         | A         |           1 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| product |          1 | X        |            2 | pname       | A         |           1 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+3 rows in set (0.02 sec)
+
+mysql> select * from product where price between(100,499);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select * from product where price between(0,1);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> insert into product values(99,GHEE,350);
+ERROR 1054 (42S22): Unknown column 'GHEE' in 'field list'
+mysql> desc product;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| pid   | int         | NO   | PRI | NULL    |       |
+| pname | varchar(20) | YES  |     | NULL    |       |
+| price | float       | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO product VALUES (101,'salt',20);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM product;
++-----+-------+-------+
+| pid | pname | price |
++-----+-------+-------+
+| 101 | salt  |    20 |
+| 104 | NULL  |  NULL |
++-----+-------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SHOW INDEX FROM product;
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table   | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| product |          0 | PRIMARY  |            1 | pid         | A         |           1 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| product |          1 | X        |            1 | pid         | A         |           1 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| product |          1 | X        |            2 | pname       | A         |           1 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from product where price between(20);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select * from product where price between(20,101);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select * from product where price between 10 AND 20 ;
++-----+-------+-------+
+| pid | pname | price |
++-----+-------+-------+
+| 101 | salt  |    20 |
++-----+-------+-------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
